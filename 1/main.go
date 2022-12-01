@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -16,13 +17,9 @@ func main() {
 		sums = append(sums, elf.sum())
 	}
 
-	result := 0
-	for _, entry := range sums {
-		if entry > result {
-			result = entry
-		}
-	}
-	fmt.Printf("result: %v\n", result)
+	sort.Ints(sums)
+	fmt.Printf("result Part 1: %v\n", sums[len(sums)-1])
+	fmt.Printf("result Part 2: %v\n", sums[len(sums)-1]+sums[len(sums)-2]+sums[len(sums)-3])
 }
 
 func readFile() string {
