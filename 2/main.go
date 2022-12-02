@@ -14,7 +14,7 @@ func main() {
 	sum := 0
 	for _, l := range lines {
 		if len(l) == 3 {
-			sum += playGame(l)
+			sum += playGameRight(l)
 		}
 	}
 	fmt.Printf("sum: %v\n", sum)
@@ -26,6 +26,60 @@ func readFile() string {
 		log.Fatalf("readFile: %v", error)
 	}
 	return string(input)
+}
+
+func playGameRight(input string) int {
+	sum := 0
+	game := strings.Split(input, " ")
+	sum += checkWinscore(game[1])
+	sum += getChoice(game[0], game[1])
+	return sum
+}
+
+func getChoice(enemy, ending string) int {
+	// Draw Cases
+	if ending == "Y" {
+		return int(enemy[0]) - 64
+	}
+	// Win Cases
+
+	if ending == "Z" {
+		if enemy == "A" {
+			return 2
+		}
+		if enemy == "B" {
+			return 3
+		}
+		if enemy == "C" {
+			return 1
+		}
+	}
+
+	if ending == "X" {
+		if enemy == "A" {
+			return 3
+		}
+		if enemy == "B" {
+			return 1
+		}
+		if enemy == "C" {
+			return 2
+		}
+	}
+
+	return 0
+
+}
+
+func checkWinscore(input string) int {
+	if input == "X" {
+		return 0
+	}
+
+	if input == "Y" {
+		return 3
+	}
+	return 6
 }
 
 func playGame(input string) int {

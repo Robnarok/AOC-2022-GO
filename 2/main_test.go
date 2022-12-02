@@ -82,3 +82,54 @@ func Test_playGame_CZ(t *testing.T) {
 		t.Errorf("got %v, wanted %v", got, want)
 	}
 }
+
+func Test_getChoice_AY(t *testing.T) {
+	got := getChoice("A", "Y")
+	want := 1
+
+	if got != want {
+		t.Errorf("got %v, wanted %v", got, want)
+	}
+}
+
+func Test_getChoice_BY(t *testing.T) {
+	got := getChoice("B", "Y")
+	want := 2
+
+	if got != want {
+		t.Errorf("got %v, wanted %v", got, want)
+	}
+}
+
+func Test_getChoice_CY(t *testing.T) {
+	got := getChoice("C", "Y")
+	want := 3
+
+	if got != want {
+		t.Errorf("got %v, wanted %v", got, want)
+	}
+}
+
+func Test_playGameRight_AY(t *testing.T) {
+	got := playGameRight("A Y")
+	want := 4
+	if got != want {
+		t.Errorf("got %v, wanted %v", got, want)
+	}
+}
+
+func Test_playGameRight_BX(t *testing.T) {
+	got := playGameRight("B X")
+	want := 1
+	if got != want {
+		t.Errorf("got %v, wanted %v", got, want)
+	}
+}
+
+func Test_playGameRight_CZ(t *testing.T) {
+	got := playGameRight("C Z")
+	want := 7
+	if got != want {
+		t.Errorf("got %v, wanted %v", got, want)
+	}
+}
