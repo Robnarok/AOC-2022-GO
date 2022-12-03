@@ -15,6 +15,20 @@ func main() {
 		value += paresLine(line)
 	}
 	fmt.Printf("value: %v\n", value)
+	value2 := 0
+	tmp := ""
+	for i := 0; i < len(lines); i += 3 {
+		tmp = findBatch(lines[i], lines[i+1], lines[i+2])
+		value2 += getValue(tmp)
+	}
+	fmt.Printf("value2: %v\n", value2)
+}
+
+func findBatch(input1, input2, input3 string) string {
+	// I want a String containing all Matching Items for Bag1 and 2
+	matches := getCommonItem(input1, input2)
+	// Check which of the Matches is also in Bag3
+	return getCommonItem(input3, matches)
 }
 
 func readFile() string {
