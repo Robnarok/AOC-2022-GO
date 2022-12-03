@@ -36,15 +36,20 @@ func parseItems(input string) (string, string) {
 	return input[0:length], input[length:]
 }
 
+// The Runtime of this Method really sucks... i may need to find a better solution
+// But i want to reuse this for Part 2
 func getCommonItem(input1, input2 string) string {
+	commonItem := ""
 	for _, i := range input1 {
 		for _, j := range input2 {
 			if i == j {
-				return string(i)
+				if !strings.Contains(commonItem, string(i)) {
+					commonItem += string(i)
+				}
 			}
 		}
 	}
-	return ""
+	return commonItem
 }
 func getValue(input string) int {
 	value := int(input[0])
