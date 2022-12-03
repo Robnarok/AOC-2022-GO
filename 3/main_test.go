@@ -125,3 +125,42 @@ func Test_getValue(t *testing.T) {
 		})
 	}
 }
+
+func Test_findBatch(t *testing.T) {
+	type args struct {
+		input1 string
+		input2 string
+		input3 string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "Case 1",
+			args: args{
+				input1: "ABC",
+				input2: "AGD",
+				input3: "ALF",
+			},
+			want: "A",
+		},
+		{
+			name: "Case GroupeOne",
+			args: args{
+				input1: "vJrwpWtwJgWrhcsFMMfFFhFp",
+				input2: "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+				input3: "PmmdzqPrVvPwwTWBwg",
+			},
+			want: "r",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := findBatch(tt.args.input1, tt.args.input2, tt.args.input3); got != tt.want {
+				t.Errorf("findBatch() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
