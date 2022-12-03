@@ -26,7 +26,7 @@ func main() {
 
 func findBatch(input1, input2, input3 string) string {
 	// I want a String containing all Matching Items for Bag1 and 2
-	matches := getCommonItem(input1, input2)
+	matches := getCommonItems(input1, input2)
 	// Check which of the Matches is also in Bag3
 	return getCommonItem(input3, matches)
 }
@@ -57,6 +57,19 @@ func getCommonItem(input1, input2 string) string {
 	for _, i := range input1 {
 		for _, j := range input2 {
 			if i == j {
+				return string(i)
+			}
+		}
+	}
+	return commonItem
+}
+
+// This one gives a Substring for Part2
+func getCommonItems(input1, input2 string) string {
+	commonItem := ""
+	for _, i := range input1 {
+		for _, j := range input2 {
+			if i == j {
 				if !strings.Contains(commonItem, string(i)) {
 					commonItem += string(i)
 				}
@@ -65,6 +78,7 @@ func getCommonItem(input1, input2 string) string {
 	}
 	return commonItem
 }
+
 func getValue(input string) int {
 	value := int(input[0])
 	if value > 96 {
