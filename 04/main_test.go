@@ -129,3 +129,39 @@ func Test_challangeOne(t *testing.T) {
 		})
 	}
 }
+
+func Test_findOverlaps(t *testing.T) {
+	type args struct {
+		elve1 []int
+		elve2 []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "5-7,7=9",
+			args: args{
+				elve1: []int{5, 6, 7},
+				elve2: []int{7, 8, 9},
+			},
+			want: true,
+		},
+		{
+			name: "5-7,8=9",
+			args: args{
+				elve1: []int{5, 6, 7},
+				elve2: []int{8, 9},
+			},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := findOverlaps(tt.args.elve1, tt.args.elve2); got != tt.want {
+				t.Errorf("findOverlaps() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

@@ -23,6 +23,16 @@ func main() {
 		}
 	}
 	fmt.Printf("Challange One: %v\n", sum)
+	sum2 := 0
+	for _, v := range lines {
+		if len(v) == 0 {
+			continue
+		}
+		if challangeTwo(v) {
+			sum2++
+		}
+	}
+	fmt.Printf("Challange two: %v\n", sum2)
 }
 
 func readFile() string {
@@ -46,6 +56,19 @@ func challangeOne(input string) bool {
 	return checkSubspace(elve1, elve2)
 }
 
+func challangeTwo(input string) bool {
+	ranges := strings.Split(input, ",")
+	elve1, err := parseRange(ranges[0])
+	if err != nil {
+		log.Fatalf("challangeTwo: %v", err)
+	}
+	elve2, err := parseRange(ranges[1])
+	if err != nil {
+		log.Fatalf("challangeTwo: %v", err)
+	}
+	return findOverlaps(elve1, elve2)
+}
+
 // Returns True, if one is a subset of the other.
 // i am going to hell for this implementation
 func checkSubspace(elve1, elve2 []int) bool {
@@ -56,6 +79,17 @@ func checkSubspace(elve1, elve2 []int) bool {
 	// Elve2 is a subset of Elve 1
 	if elve2[0] >= elve1[0] && elve2[len(elve2)-1] <= elve1[len(elve1)-1] {
 		return true
+	}
+	return false
+}
+
+func findOverlaps(elve1, elve2 []int) bool {
+	for _, v := range elve1 {
+		for _, v2 := range elve2 {
+			if v == v2 {
+				return true
+			}
+		}
 	}
 	return false
 }
