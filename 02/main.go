@@ -1,4 +1,4 @@
-package main
+
 
 import (
 	"fmt"
@@ -42,6 +42,7 @@ func getChoice(enemy, ending string) int {
 		return int(enemy[0]) - 64
 	}
 	// Win Cases
+	// ... There must be a better Solution without hardcoding
 
 	if ending == "Z" {
 		if enemy == "A" {
