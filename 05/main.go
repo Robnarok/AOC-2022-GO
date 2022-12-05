@@ -11,6 +11,8 @@ import (
 func main() {
 	input := readFile()
 	runPuzzleOne(input)
+	fmt.Println()
+	runPuzzleTwo(input)
 }
 
 func readFile() string {
@@ -31,6 +33,18 @@ func runPuzzleOne(input string) {
 		for i := 0; i < times; i++ {
 			ship = runMove(ship, from-1, to-1)
 		}
+	}
+	printLastCargo(ship)
+}
+
+func runPuzzleTwo(input string) {
+	status, commandtext := splitCommandsAndStatus(input)
+	ship := parseStatus(status)
+	commands := strings.Split(commandtext, "\n")
+
+	for _, command := range commands {
+		times, from, to := readCommand(command)
+		ship = runMultipleMove(ship, times, from-1, to-1)
 	}
 	printLastCargo(ship)
 }
@@ -74,6 +88,14 @@ func printLastCargo(ship []string) {
 	for _, v := range ship {
 		fmt.Printf("%v", string(v[len(v)-1]))
 	}
+}
+
+// At this point i donr really understand why it works
+func runMultipleMove(ship []string, times, from, to int) []string {
+	cargo := string(ship[from][len(ship[from])-times:])
+	ship[from] = strings.TrimSuffix(ship[from], cargo)
+	ship[to] += cargo
+	return ship
 }
 
 func runMove(ship []string, from, to int) []string {

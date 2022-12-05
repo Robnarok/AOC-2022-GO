@@ -89,3 +89,45 @@ func Test_readCommand(t *testing.T) {
 		})
 	}
 }
+
+func Test_runMultipleMove(t *testing.T) {
+	type args struct {
+		ship  []string
+		times int
+		from  int
+		to    int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{
+			name: "moveMultipleStuff",
+			args: args{
+				ship:  []string{"ABC", "FDE"},
+				times: 2,
+				from:  1,
+				to:    0,
+			},
+			want: []string{"ABCDE", "F"},
+		},
+		{
+			name: "moveMultipleStuff1",
+			args: args{
+				ship:  []string{"", "MC"},
+				times: 2,
+				from:  1,
+				to:    0,
+			},
+			want: []string{"MC", ""},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := runMultipleMove(tt.args.ship, tt.args.times, tt.args.from, tt.args.to); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("runMultipleMove() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
