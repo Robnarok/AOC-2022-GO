@@ -8,7 +8,8 @@ import (
 
 func main() {
 	input := readFile()
-	fmt.Printf("searchSequence(input): %v\n", searchSequence(input))
+	fmt.Printf("Part One: %v\n", searchSequence(4, input))
+	fmt.Printf("Part Two: %v\n", searchSequence(14, input))
 }
 
 func readFile() string {
@@ -19,13 +20,13 @@ func readFile() string {
 	return string(input)
 }
 
-func searchSequence(input string) int {
+func searchSequence(sequenceLength int, input string) int {
 
 	lenght := len(input)
 
-	for i := 3; i < lenght; i++ {
-		marktext := collectSequenceFromPos(input, i)
-		if isSignal(marktext) {
+	for i := sequenceLength - 1; i < lenght; i++ {
+		marktext := collectSequenceFromPos(sequenceLength, input, i)
+		if isSignal(sequenceLength, marktext) {
 			return i + 1
 		}
 	}
@@ -33,27 +34,26 @@ func searchSequence(input string) int {
 	return -1
 }
 
-func collectSequenceFromPos(input string, place int) string {
-	if place < 3 {
+func collectSequenceFromPos(sequenceLength int, input string, place int) string {
+	if place < sequenceLength-1 {
 		return ""
 	}
 	returnString := ""
-	returnString += string(input[place-3])
-	returnString += string(input[place-2])
-	returnString += string(input[place-1])
-	returnString += string(input[place])
+	for i := sequenceLength - 1; i >= 0; i-- {
+		returnString += string(input[place-i])
+	}
 	return returnString
 }
 
 // isSignal gets a String with 4 Chars and checks if there is a double Occurence
-func isSignal(input string) bool {
+func isSignal(sequencelength int, input string) bool {
 	length := len(input)
-	if length != 4 {
-		log.Fatalf("isSignal: %v", "Input is to long")
+	if length != sequencelength {
+		log.Fatalf("isSignal: %v", "Input is not the right size")
 	}
-	// Only needs to check 3 Chars
-	for i := 0; i < 3; i++ {
-		for j := i + 1; j < 4; j++ {
+	// The last Char doesnt need to be checked
+	for i := 0; i < sequencelength-1; i++ {
+		for j := i + 1; j < sequencelength; j++ {
 			if input[i] == input[j] {
 				return false
 			}
