@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -48,6 +49,22 @@ func main() {
 	}
 	fmt.Printf("sum: %v\n", sum)
 
+	// Part 2... thats really not that beautifull
+	rootDir := computer["/"]
+	rootDirUsed := rootDir.sum(computer)
+	freeSpace := 70000000 - rootDirUsed
+	neededSpace := 30000000 - freeSpace
+	fmt.Printf("neededSpace: %v\n", neededSpace)
+
+	var dirs []int
+	for _, f := range computer {
+		tmp := f.sum(computer)
+		if tmp >= neededSpace {
+			dirs = append(dirs, tmp)
+		}
+	}
+	sort.Ints(dirs)
+	fmt.Printf("dirs[0]: %v\n", dirs[0])
 }
 
 func readFile() string {
@@ -80,6 +97,9 @@ func runLine(dir, command string, computer map[string]folder) (string, map[strin
 func parseFolders(dir, command string, computer map[string]folder) map[string]folder {
 	currentFolder := computer[dir]
 	folderPath := dir + "/" + command
+	if dir == "/" {
+		folderPath = "/" + command
+	}
 	currentFolder.folders = append(currentFolder.folders, folderPath)
 	computer[folderPath] = folder{
 		dirPath: folderPath,
